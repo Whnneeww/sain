@@ -1,0 +1,36 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Input</title>
+</head>
+<body>
+<h1>Enter your sign:</h1>
+<form id="sign-form">
+  <textarea id="sign-input" rows="4" cols="50"></textarea><br>
+  <button type="submit">Save Sign</button>
+</form>
+
+<script>
+document.getElementById('sign-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const sign = document.getElementById('sign-input').value;
+  fetch('/save-sign', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'sign=' + encodeURIComponent(sign)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.message);
+  });
+});
+</script>
+</body>
+</html>
